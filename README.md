@@ -87,6 +87,8 @@ Hope this is useful for someone! 😊
 
 * Mitchell Hashimoto is a [big fan of Nix](https://mitchellh.com/writing/nix-with-dockerfiles).
 
+* [Fasterthanlime aka Amos on nix](https://fasterthanli.me/search?q=nix).
+
 * [NixOS & Nix Flakes - A Guide for Beginners](https://thiscute.world/en/posts/nixos-and-flake-basics/)
 
 How much do you need to know about `nix` to use it? I do not know much, and yet somehow I'm (somewhat) getting by 
