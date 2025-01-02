@@ -1,64 +1,70 @@
 {
-  description = "flask-example";
+  # Based on:
+  # https://fasterthanli.me/series/building-a-rust-service-with-nix/part-10#a-flake-with-mkderivation
+  # https://github.com/justinwoo/nix-shorts/blob/master/posts/your-first-derivation.md
+  description = "datomic-transactor-example";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/release-24.11";
     flake-utils.url = "github:numtide/flake-utils";
-    poetry2nix.url = "github:nix-community/poetry2nix";
   };
   outputs =
     {
       self,
       nixpkgs,
       flake-utils,
-      poetry2nix,
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
       let
-	name = "simple";
-        src = ./.;
         pkgs = import nixpkgs { inherit system; };
-        inherit (poetry2nix.lib.mkPoetry2Nix { inherit pkgs; }) mkPoetryApplication;
+        inherit (pkgs) stdenv lib;
       in
       with pkgs;
       rec {
-	packages.datomic-transactor =
+        packages.default =
+          let
+            transactor-deps = [ packages.datomic-transactor ];
+          in
+          stdenv.mkDerivation {
+            name = "datomic-launcher";
+            src = ./src;
+            nativeBuildInputs = [ makeWrapper ];
+            buildInputs = transactor-deps;
+            phases = [
+              "installPhase"
+              "postInstall"
+            ];
+            installPhase = ''
+                mkdir -p $out/bin
+                cp -fv $src/*.sh $out/bin/.
+            '';
+            postInstall = ''
+                wrapProgram $out/bin/transactor.sh --prefix PATH : ${lib.makeBinPath transactor-deps}
+            '';
+          };
+
+        packages.datomic-transactor =
           let
             version = "1.0.7277";
-            inherit (pkgs) stdenv lib;
           in
-          stdenv.mkDerivation
-            {
-              name = "datomic-transactor-${version}";
-              src = pkgs.fetchzip {
-                url = "https://datomic-pro-downloads.s3.amazonaws.com/${version}/datomic-pro-${version}.zip";
-                sha256 = "sha256-fqmw+MOUWPCAhHMROjP48BwWCcRknk+KECM3WvF/Ml4=";
-              };
-
-	      nativeBuildInputs = [
-    		makeWrapper
-  	      ];
-
-	      phases = [ "installPhase" "postInstall" ];
-              installPhase = ''
-		    mkdir -p $out/bin
-		    mkdir -p $out/janei
-		    cp -R $src/* $out/.
-		    echo "$src" > $out/meh.txt
-		  '';
-
-	     postInstall = ''
-		mkdir -p $out/bin
-      		wrapProgram $out/bin/transactor --prefix PATH : $out --prefix PATH : $(pwd)
-      		'';
+          stdenv.mkDerivation {
+            name = "datomic-transactor-${version}";
+            src = pkgs.fetchzip {
+              url = "https://datomic-pro-downloads.s3.amazonaws.com/${version}/datomic-pro-${version}.zip";
+              sha256 = "sha256-fqmw+MOUWPCAhHMROjP48BwWCcRknk+KECM3WvF/Ml4=";
             };
+#            phases = [ "installPhase" ];
+            installPhase = ''
+                mkdir -p $out/
+                cp -R $src/* $out/.
+            '';
+          };
         # Development environment
         devShell = mkShell {
           buildInputs = [
-	    jdk
-            poetry
-            python3
-	    packages.datomic-transactor
+            clojure
+            jdk
+            packages.default
           ];
         };
       }

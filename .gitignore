@@ -1,0 +1,7 @@
+.idea/
+.direnv/
+.cpcache/
+log/
+data/
+transactor.out.properties
+transactor.pid

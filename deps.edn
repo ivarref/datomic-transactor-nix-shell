@@ -1,0 +1,7 @@
+{:deps    {org.clojure/clojure    {:mvn/version "1.12.0"}
+           com.datomic/peer       {:mvn/version "1.0.7277"}
+           org.slf4j/slf4j-simple {:mvn/version "2.0.16"}}
+ :paths   ["src"]
+
+ :aliases {:run       {:exec-fn demo/demo}
+           :read-only {:exec-fn demo/read-only}}}
