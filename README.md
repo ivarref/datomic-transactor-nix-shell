@@ -51,6 +51,7 @@ Exiting
 
 # Stop the transactor, do whatever, start the transactor again. And then:
 $ clojure -X:read-only
+#            ^^^^^^^^^ Reading only this time 
 Starting
 [{:db/id 17592186045418,
   :movie/title "The Goonies",
