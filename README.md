@@ -82,3 +82,12 @@ the versions per repo (instead of system wide) and also share an easily reproduc
 to use.
 
 Hope this is useful for someone! 😊
+
+## Further reading
+
+* Mitchell Hashimoto is a [big fan of Nix](https://mitchellh.com/writing/nix-with-dockerfiles).
+
+* [NixOS & Nix Flakes - A Guide for Beginners](https://thiscute.world/en/posts/nixos-and-flake-basics/)
+
+How much do you need to know about `nix` to use it? I do not know much, and yet somehow I'm (somewhat) getting by 
+just fine. ¯\_(ツ)_/¯

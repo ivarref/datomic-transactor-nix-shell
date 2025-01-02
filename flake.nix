@@ -35,11 +35,11 @@
               "postInstall"
             ];
             installPhase = ''
-                mkdir -p $out/bin
-                cp -fv $src/*.sh $out/bin/.
+              mkdir -p $out/bin
+              cp -fv $src/*.sh $out/bin/.
             '';
             postInstall = ''
-                wrapProgram $out/bin/transactor.sh --prefix PATH : ${lib.makeBinPath transactor-deps}
+              wrapProgram $out/bin/transactor.sh --prefix PATH : ${lib.makeBinPath transactor-deps}
             '';
           };
 
@@ -53,10 +53,10 @@
               url = "https://datomic-pro-downloads.s3.amazonaws.com/${version}/datomic-pro-${version}.zip";
               sha256 = "sha256-fqmw+MOUWPCAhHMROjP48BwWCcRknk+KECM3WvF/Ml4=";
             };
-#            phases = [ "installPhase" ];
+            #            phases = [ "installPhase" ];
             installPhase = ''
-                mkdir -p $out/
-                cp -R $src/* $out/.
+              mkdir -p $out/
+              cp -R $src/* $out/.
             '';
           };
         # Development environment
