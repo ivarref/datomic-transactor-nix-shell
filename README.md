@@ -79,7 +79,7 @@ are locked and pinned. And thus you do not *need* a system wide Java installatio
 what is mentioned in the Installation section). In some future case where the JVM breaks backwards compatibility,
 this repo should still work (as it bundles its own JVM). With this setup you can also of course tweak
 the versions per repo (instead of system wide) and also share an easily reproducible environment for others
-to use.
+to use. Just `cd` into the repo, and you should be good to go.
 
 Hope this is useful for someone! 😊
 
