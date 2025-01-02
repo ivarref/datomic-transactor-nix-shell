@@ -2,7 +2,7 @@
 
 Ever wanted to `cd` into a directory and have the Datomic transactor, Java and Clojure installed?
 
-If so, this repo is for you. Or: this repo could serve as an inspiration for such a setup.
+If so, this repo is for you.
 
 ## Installation
 
