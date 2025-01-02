@@ -92,4 +92,4 @@ Hope this is useful for someone! 😊
 * [NixOS & Nix Flakes - A Guide for Beginners](https://thiscute.world/en/posts/nixos-and-flake-basics/)
 
 How much do you need to know about `nix` to use it? I do not know much, and yet somehow I'm (somewhat) getting by 
-just fine. ¯\_(ツ)_/¯
+just fine. ¯\\_(ツ)_/¯
