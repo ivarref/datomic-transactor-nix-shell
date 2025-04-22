@@ -23,10 +23,7 @@
       rec {
         packages.default =
           let
-            transactor-deps = [
-              packages.datomic-jdbc-sqlite
-#              packages.datomic-transactor
-            ];
+            transactor-deps = [ packages.datomic-transactor ];
           in
           stdenv.mkDerivation {
             name = "datomic-launcher";
@@ -48,39 +45,26 @@
 
         packages.datomic-transactor =
           let
-            version = "1.0.7277";
+            datomic-version = "1.0.7277";
+            sqllite-version = "3.47.0.0";
           in
           stdenv.mkDerivation {
-            name = "datomic-transactor-${version}";
+            name = "datomic-transactor-${datomic-version}";
             src = pkgs.fetchzip {
-              url = "https://datomic-pro-downloads.s3.amazonaws.com/${version}/datomic-pro-${version}.zip";
+              url = "https://datomic-pro-downloads.s3.amazonaws.com/${datomic-version}/datomic-pro-${datomic-version}.zip";
               sha256 = "sha256-fqmw+MOUWPCAhHMROjP48BwWCcRknk+KECM3WvF/Ml4=";
             };
+            src2 = pkgs.fetchurl {
+              url = "https://github.com/xerial/sqlite-jdbc/releases/download/${sqllite-version}/sqlite-jdbc-${sqllite-version}.jar";
+              sha256 = "sha256-k9R8AGN3xHb497RdANIGBrd9WVFCPzRu9WtbCBNhwtM=";
+            };
             installPhase = ''
-              mkdir -p $out/
+              mkdir -p $out/lib
               cp -R $src/* $out/.
+              cp $src2 $out/lib/sqlite-jdbc-${sqllite-version}.jar
             '';
           };
 
-        packages.datomic-jdbc-sqlite =
-          let
-            version = "3.47.0.0";
-          in
-          stdenv.mkDerivation {
-            name = "datomic-jdbc-sqlite-test-${version}";
-            src = pkgs.fetchurl {
-              url = "https://github.com/xerial/sqlite-jdbc/releases/download/${version}/sqlite-jdbc-${version}.jar";
-              sha256 = "sha256-k9R8AGN3xHb497RdANIGBrd9WVFCPzRu9WtbCBNhwtM=";
-            };
-            unpackPhase = ''
-                mkdir -p $out
-                cp -fv $src $out/.
-            '';
-#            installPhase = ''
-#              mkdir -p $out/
-#              cp -fv $src $out/.
-#            '';
-          };
         # Development environment
         devShell = mkShell {
           buildInputs = [
