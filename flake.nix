@@ -23,7 +23,7 @@
       rec {
         packages.default =
           let
-            transactor-deps = [ packages.datomic-transactor ];
+            transactor-deps = [ packages.datomic-jdbc-sqlite packages.datomic-transactor ];
           in
           stdenv.mkDerivation {
             name = "datomic-launcher";
@@ -53,10 +53,26 @@
               url = "https://datomic-pro-downloads.s3.amazonaws.com/${version}/datomic-pro-${version}.zip";
               sha256 = "sha256-fqmw+MOUWPCAhHMROjP48BwWCcRknk+KECM3WvF/Ml4=";
             };
-            #            phases = [ "installPhase" ];
             installPhase = ''
               mkdir -p $out/
               cp -R $src/* $out/.
+            '';
+          };
+        packages.datomic-jdbc-sqlite =
+          let
+            version = "3.47.0.0";
+          in
+          stdenv.mkDerivation {
+            name = "datomic-jdbc-sqlite-${version}";
+            src = pkgs.fetchzip {
+              url = "https://github.com/xerial/sqlite-jdbc/releases/download/${version}/sqlite-jdbc-${version}.jar";
+              sha256 = "sha256-fqmw+MOUWPCAhHMROjP48BwWCcRknk+KECM3WvF/Ml4=";
+            };
+            installPhase = ''
+              mkdir -p $out/
+              cp -R $src/* $out/.
+              ls -lrt $out/ > tmp.txt
+              cp tmp.txt $out/.
             '';
           };
         # Development environment
