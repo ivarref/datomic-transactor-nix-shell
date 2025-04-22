@@ -27,7 +27,7 @@
           in
           stdenv.mkDerivation {
             name = "datomic-launcher";
-            src = ./src;
+            src = ./transactor;
             nativeBuildInputs = [ makeWrapper ];
             buildInputs = transactor-deps;
             phases = [

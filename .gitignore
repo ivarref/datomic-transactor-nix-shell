@@ -1,7 +1,6 @@
 .idea/
 .direnv/
 .cpcache/
-log/
-data/
+*.iml
 transactor.out.properties
 transactor.pid
