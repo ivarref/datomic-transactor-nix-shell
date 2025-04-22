@@ -23,7 +23,7 @@
       rec {
         packages.default =
           let
-            transactor-deps = [ packages.datomic-transactor ];
+            transactor-deps = [ packages.datomic-transactor sqlite netcat ];
           in
           stdenv.mkDerivation {
             name = "datomic-launcher";

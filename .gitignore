@@ -4,3 +4,5 @@
 *.iml
 transactor.out.properties
 transactor.pid
+transactor/storage/sqlite*
+transactor/storage/log/*.log
