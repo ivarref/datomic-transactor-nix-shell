@@ -1,7 +1,9 @@
 {:deps    {org.clojure/clojure    {:mvn/version "1.12.0"}
            com.datomic/peer       {:mvn/version "1.0.7277"}
+           org.xerial/sqlite-jdbc {:mvn/version "3.47.0.0"}
            org.slf4j/slf4j-simple {:mvn/version "2.0.16"}}
  :paths   ["src"]
 
- :aliases {:run       {:exec-fn demo/demo}
-           :read-only {:exec-fn demo/read-only}}}
+ :aliases {:run-multicast {:exec-fn demo/demo-multicast}
+           :run-unicast   {:exec-fn demo/demo-unicast}
+           :read-only     {:exec-fn demo/read-only}}}
